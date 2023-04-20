@@ -1,0 +1,95 @@
+version: "3.7"
+
+services:
+  workerbee-core:
+    image: gcr.io/scrna-196615/workerbee-core:R-4.0.0
+    build:
+      context: workerbee-core
+      dockerfile: Dockerfile
+    ports:
+      - "8787:8787"
+    environment:
+      - PASSWORD=oidutsr
+    volumes:
+      - "$HOME/workspace:/home/rstudio/workspace"
+    secrets:
+      - Renviron
+  workerbee-bioc:
+    image: gcr.io/scrna-196615/workerbee-bioc:R-4.0.0
+    build:
+      context: workerbee-bioc
+      dockerfile: Dockerfile
+    ports:
+      - "8787:8787"
+    environment:
+      - PASSWORD=oidutsr
+    volumes:
+      - "$HOME/workspace:/home/rstudio/workspace"
+    secrets:
+      - Renviron
+  workerbee-ml:
+    image: gcr.io/scrna-196615/workerbee-ml:R-4.0.0
+    build:
+      context: workerbee-ml
+      dockerfile: Dockerfile
+    environment:
+      - PASSWORD=oidutsr
+    volumes:
+      - "$HOME/workspace:/home/rstudio/workspace"
+    ports:
+      - "8787:8787"
+    secrets:
+      - Renviron
+  workerbee-sc:
+    image: gcr.io/scrna-196615/workerbee-sc:R-4.0.0
+    build:
+      context:  workerbee-sc
+      dockerfile: Dockerfile
+    environment:
+      - PASSWORD=oidutsr
+      - ROOT=true
+    volumes:
+      - "$HOME/workspace:/home/rstudio/workspace"
+    ports:
+      - "8787:8787"
+    secrets:
+    - Renviron
+  workerbee-microarray:
+    image: gcr.io/scrna-196615/workerbee-microarray:R-4.0.0
+    build:
+      context:  workerbee-microarray
+      dockerfile: Dockerfile
+    environment:
+      - PASSWORD=oidutsr
+    volumes:
+      - "$HOME/workspace:/home/rstudio/workspace"
+    secrets:
+      - Renviron
+  workerbee-powrsimr:
+    image: gcr.io/scrna-196615/workerbee-powrsimr:R-4.0.0
+    build:
+      context:  workerbee-powrsimr
+      dockerfile: Dockerfile
+    environment:
+      - PASSWORD=oidutsr
+    volumes:
+      - "$HOME/workspace:/home/rstudio/workspace"
+    secrets:
+      - Renviron
+  workerbee-powrsimr:
+    image: gcr.io/scrna-196615/workerbee-sc-shiny:R-4.0.0
+    build:
+      context:  workerbee-sc-shiny
+      dockerfile: Dockerfile
+    environment:
+      - PASSWORD=oidutsr
+    volumes:
+      - "$HOME/workspace:/home/rstudio/workspace"
+    ports:
+      - "8787:8787"
+    secrets:
+      - Renviron
+
+secrets:
+    Renviron:
+        file: ./.Renviron

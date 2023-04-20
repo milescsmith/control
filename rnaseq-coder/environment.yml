@@ -1,0 +1,24 @@
+name: reticulate
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - pip
+  - h5py
+  - hdf5
+  - louvain
+  - leidenalg
+  - numpy
+  - pandas
+  - pandoc
+  - anndata
+  - scanpy==1.4.6
+  - scikit-learn
+  - scipy
+  - pip:
+      - git+https://github.com/milescsmith/AutoImpute
+      - git+https://github.com/theislab/scvelo
+      - git+https://github.com/milescsmith/ReductionWrappers@2.5.4
+      - git+https://github.com/milescsmith/s2a@0.3.2
+prefix: /home/rstudio/conda/envs/reticulate

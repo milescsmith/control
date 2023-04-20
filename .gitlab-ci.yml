@@ -1,0 +1,191 @@
+image: docker:latest
+stages: 
+  - build
+services:
+  - name: docker:dind
+    command: ["--experimental"]
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_BUILDKIT: 1
+  DOCKER_CLI_EXPERIMENTAL: enabled
+  IMAGE_VERSION: "buildkit-R-4.0.0"
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  - export
+
+stages:
+  - build-core
+  - build-bioc
+  - build-ml
+  - build-singlecell-base
+  - build-others
+  
+workerbee-core:
+  stage: build-core
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_BUILD_NAME
+  only:
+   changes:
+     - Dockerfile
+     - "*.R"
+  interruptible: true
+  #when: manual
+  script:
+    - docker pull $IMAGE_NAME:latest || true
+    - docker build
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --cache-from $CONTAINER_NAME:latest
+        --tag $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+        --tag $IMAGE_NAME:$IMAGE_VERSION
+        --tag $IMAGE_NAME:latest
+        workerbee-core
+    - docker run $IMAGE_NAME R --version
+    - docker run $IMAGE_NAME conda --version
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME:$IMAGE_VERSION
+    - docker push $IMAGE_NAME:latest
+
+workerbee-bioc:
+  stage: build-bioc
+  dependencies:
+    - workerbee-core
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_BUILD_NAME
+  only:
+   changes:
+     - Dockerfile
+     - "*.R"
+  interruptible: true
+  #when: manual
+  script:
+    - docker pull $IMAGE_NAME:latest || true
+    - docker build 
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --cache-from $IMAGE_NAME:latest
+        --tag $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+        --tag $IMAGE_NAME:$IMAGE_VERSION
+        --tag $IMAGE_NAME:latest 
+        workerbee-bioc
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME:$IMAGE_VERSION
+    - docker push $IMAGE_NAME:latest
+
+workerbee-ml:
+  stage: build-ml
+  dependencies:
+    - workerbee-bioc
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_BUILD_NAME
+  # only:
+  #  changes:
+  #    - Dockerfile
+  #    - "*.R"
+  interruptible: true
+  #when: manual
+  script:
+    - docker build
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --cache-from $IMAGE_NAME:latest
+        --tag $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+        --tag $IMAGE_NAME:$IMAGE_VERSION
+        --tag $IMAGE_NAME:latest 
+        workerbee-ml
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME:$IMAGE_VERSION
+    - docker push $IMAGE_NAME:latest
+
+workerbee-sc:
+  stage: build-singlecell-base
+  dependencies:
+    - workerbee-ml
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_BUILD_NAME
+  #only:
+  #  changes:
+  #    - Dockerfile
+  #    - "*.R"
+  interruptible: true
+  #when: manual
+  script:
+    - docker build
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --cache-from $IMAGE_NAME:latest
+        --tag $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+        --tag $IMAGE_NAME:$IMAGE_VERSION
+        --tag $IMAGE_NAME:latest 
+        workerbee-sc
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME:$IMAGE_VERSION
+    - docker push $IMAGE_NAME:latest
+
+workerbee-sc-shiny:
+  stage: build-others
+  dependencies:
+    - workerbee-sc
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_BUILD_NAME
+  #only:
+  #  changes:
+  #    - Dockerfile
+  #    - "*.R"
+  interruptible: true
+  #when: manual
+  script:
+    - docker build
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --cache-from $IMAGE_NAME:latest
+        --tag $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+        --tag $IMAGE_NAME:$IMAGE_VERSION
+        --tag $IMAGE_NAME:latest 
+        workerbee-sc-shiny
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME:$IMAGE_VERSION
+    - docker push $IMAGE_NAME:latest
+
+workerbee-powsimr:
+  stage: build-others
+  dependencies:
+    - workerbee-sc
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_BUILD_NAME
+  #only:
+  #  changes:
+  #    - Dockerfile
+  #    - "*.R"
+  interruptible: true
+  #when: manual
+  script:
+    - docker build
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --cache-from $IMAGE_NAME:latest
+        --tag $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+        --tag $IMAGE_NAME:$IMAGE_VERSION
+        --tag $IMAGE_NAME:latest 
+        workerbee-powsimr
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME:$IMAGE_VERSION
+    - docker push $IMAGE_NAME:latest
+
+workerbee-microarray:
+  stage: build-others
+  dependencies:
+    - workerbee-ml
+  variables:
+    IMAGE_NAME: $CI_REGISTRY_IMAGE/$CI_BUILD_NAME
+  #only:
+  #  changes:
+  #    - Dockerfile
+  #    - "*.R"
+  interruptible: true
+  #when: manual
+  script:
+    - docker build
+        --build-arg BUILDKIT_INLINE_CACHE=1
+        --cache-from $IMAGE_NAME:latest
+        --tag $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+        --tag $IMAGE_NAME:$IMAGE_VERSION
+        --tag $IMAGE_NAME:latest 
+        workerbee-microarray
+    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME:$IMAGE_VERSION
+    - docker push $IMAGE_NAME:latest

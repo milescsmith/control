@@ -1,0 +1,26 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker:latest'
+  entrypoint: 'bash'
+- name: 'gcr.io/cloud-builders/docker:latest'
+  args: [ 'build',
+          '--build-arg', '_WORKERBEE_VERSION=${_WORKERBEE_VERSION}',
+          '--build-arg', '_PARENT=${_PARENT}',
+          '--build-arg', '_WORKERBEE_VARIANT=${_WORKERBEE_VARIANT}',
+          '--build-arg', '_PARENT_VERSION=${_PARENT_VERSION}',
+          '--build-arg', '_RSTUDIO_VERSION=${_RSTUDIO_VERSION}',
+          '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}:${_WORKERBEE_VERSION}',
+          '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}:latest',
+          '.' ]
+  # env:
+  #   - "DOCKER_BUILDKIT=1"
+images:
+- 'us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}'
+substitutions:
+    _WORKERBEE_VERSION: R-4.0.3d
+    _WORKERBEE_VARIANT: rnaseq-drake
+    _PARENT: bioconductor/bioconductor_docker
+    _PARENT_VERSION: RELEASE_3_12
+    _SHIPYARD: utopia-planitia
+    _RSTUDIO_VERSION: preview
+options:
+    substitution_option: 'ALLOW_LOOSE'

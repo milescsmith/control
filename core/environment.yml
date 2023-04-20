@@ -1,0 +1,20 @@
+name: reticulate
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python==3.9.9
+  - pip
+  - h5py
+  - hdf5
+  - louvain
+  - leidenalg
+  - numpy
+  - pandas
+  - pandoc
+  - anndata
+  - scanpy==1.8.2
+  - scikit-learn
+  - scipy
+prefix: /home/rstudio/conda/envs/reticulate

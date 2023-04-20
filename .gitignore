@@ -1,0 +1,6 @@
+**/*Renviron
+**/.DS_Store
+**/*.json
+.vscode/
+**/*.key
+**/*.pem

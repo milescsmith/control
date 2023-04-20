@@ -1,0 +1,17 @@
+Bootstrap: docker
+From: rocker/tidyverse:4.1.2
+
+%files
+  r_packages.R /opt/r_packages.R
+
+%post
+  apt update --fix-missing
+  DEBIAN_FRONTEND=noninteractive \
+    apt-get install --no-install-recommends -y -q \
+    munge slurm-wlm slurm-wlm-basic-plugins-dev
+  apt-get clean
+  dpkg --clear-avail
+  rm -rf /tmp/downloaded_packages/*
+  rm -rf /var/lib/apt/lists/*
+  rm -f /var/lib/dpkg/available && rm -rf  /var/cache/apt/*
+  Rscript -e "source('/opt/r_packages.R')"

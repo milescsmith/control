@@ -1,0 +1,35 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker:latest'
+  entrypoint: 'bash'
+  args:
+    - "-c"
+    - |
+      docker build \
+      --build-arg _GITHUB_PAT=$(cat GITHUB_PERSONAL_ACCESS_TOKEN.txt) \
+      --build-arg PROJECT=$PROJECT_ID \
+      --build-arg _REPO=${_REPO} \
+      --build-arg _SHIPYARD=${_SHIPYARD} \
+      --build-arg _WORKERBEE_VERSION=${_WORKERBEE_VERSION} \
+      --build-arg _PARENT=${_PARENT} \
+      --build-arg _PARENT_VERSION=${_PARENT_VERSION} \
+      --build-arg _PARENT_VARIANT=${_PARENT_VARIANT} \
+      --build-arg _WORKERBEE_VARIANT=${_WORKERBEE_VARIANT} \
+      --build-arg _RSTUDIO_VERSION=${_RSTUDIO_VERSION} \
+      -t us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}:${_WORKERBEE_VERSION} \
+      -t us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}:latest \
+      .
+  env:
+    - "DOCKER_BUILDKIT=1"
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}'
+substitutions:
+    _WORKERBEE_VARIANT: singlecell-futures
+    _WORKERBEE_VERSION: 4.1.0
+    _PARENT: workerbee
+    _PARENT_VARIANT: singlecell
+    _PARENT_VERSION: 4.1.0
+    _REPO: us-central1-docker.pkg.dev
+    _SHIPYARD: utopia-planitia
+    _RSTUDIO_VERSION: preview
+options:
+    substitution_option: 'ALLOW_LOOSE'

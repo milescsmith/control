@@ -1,0 +1,28 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker:latest'
+  args: [ 'build',
+          '--build-arg', 'PROJECT=$PROJECT_ID',
+          '--build-arg', '_REPO=${_REPO}',
+          '--build-arg', '_SHIPYARD=${_SHIPYARD}',
+          '--build-arg', '_PARENT=${_PARENT}',
+          '--build-arg', '_PARENT_VERSION=${_PARENT_VERSION}',
+          '--build-arg', '_PARENT_VARIANT=${_PARENT_VARIANT}',
+          '--build-arg', '_WORKERBEE_VERSION=${_WORKERBEE_VERSION}',
+          '--build-arg', '_WORKERBEE_VARIANT=${_WORKERBEE_VARIANT',
+          '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}:${_WORKERBEE_VERSION}',
+          '-t', 'us-central1-ocker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}:latest',
+          '.' ]
+  # env:
+  #   - "DOCKER_BUILDKIT=1"
+images:
+- 'us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}'
+substitutions:
+    _WORKERBEE_VARIANT: core
+    _WORKERBEE_VERSION: 4.2.2
+    _PARENT: bioconductor
+    _PARENT_VARIANT: None
+    _PARENT_VERSION: "3.16"
+    _REPO: us-central1-docker.pkg.dev
+    _SHIPYARD: utopia-planitia
+options:
+    substitution_option: 'ALLOW_LOOSE'

@@ -1,0 +1,16 @@
+[Unit]
+Description=Jupyter Notebook
+AssertPathExists=/home/rstudio/conda/envs/jupyter
+
+[Service]
+Type=simple
+PIDFile=/run/jupyter.pid
+User=USER
+Group=USERGROUP
+ExecStart=/bin/bash /home/rstudio/start-jupyter-service.sh --NotebookApp.kernel_spec_manager_class='environment_kernels.EnvironmentKernelSpecManager --ip='*'
+WorkingDirectory=/home/rstudio/workspace
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
