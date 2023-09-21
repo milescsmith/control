@@ -5,7 +5,7 @@
 # ARG _PARENT_VARIANT
 # ARG _PARENT_VERSION
 # FROM ${_REPO}/${PROJECT}/${_SHIPYARD}/${_PARENT}:${_PARENT_VERSION}
-FROM bioconductor/bioconductor_docker:RELEASE_3_16
+FROM bioconductor/bioconductor_docker:RELEASE_3_17-R-4.3.0
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update --fix-missing && \
@@ -48,32 +48,30 @@ RUN Rscript -e "source('/home/rstudio/core_packages.R')" && \
    rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
    rm /home/rstudio/core_packages.R
 
-ENV PATH /home/rstudio/conda/bin:$PATH
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /home/rstudio/miniconda.sh && \
-   /bin/bash /home/rstudio/miniconda.sh -b -p /home/rstudio/conda && \
-   rm /home/rstudio/miniconda.sh && \
-   /home/rstudio/conda/bin/conda init && \
-   conda update -n base -c defaults conda -y && \
-   conda install -c conda-forge mamba && \
-   mamba update -n base -c conda-forge mamba && \
-   mamba clean --all -y
-
 # Add Python packages through Miniconda
 # Set the reticulate environment to be activated by default
 # Note: currently, attempting to install pip dependencies by placing them
 #    in the environment.yml definition causes docker to hang indefinitely.
 #    Installing using pip avoids that issue
+ENV PATH /home/rstudio/micromamba/bin:$PATH
 COPY environment.yml /tmp/environment.yml
-RUN mamba env create -f /tmp/environment.yml && \
-   mamba clean --all -y && \
-   mamba init
-ENV PATH /home/rstudio/conda/envs/reticulate/bin:$PATH
+SHELL [ "/usr/bin/bash", "-o", "pipefail", "-c" ]
+RUN curl micro.mamba.pm/install.sh | bash \
+    && source ~/.bashrc \
+RUN /home/rstudio/.local/bin/micromamba activate \
+   && /home/rstudio/.local/bin/micromamba install -y -n base -c conda-forge mamba python=3.9 \
+   && mamba init \
+   && mamba env create -f /tmp/environment.yml \
+   && mamba clean --all -y
+   
+ENV PATH /home/rstudio/micromamba/conda/envs/reticulate/bin:$PATH
 ENV RETICULATE_PYTHON /home/rstudio/conda/envs/reticulate/bin
 
 COPY user-settings /home/rstudio/.rstudio/monitored/user-settings/user-settings
-RUN mamba init bash
+
 RUN echo "export RETICULATE_AUTOCONFIGURE=0" >> /home/rstudio/.bashrc
 RUN echo "export RETICULATE_AUTOCONFIGURE=0" >> /home/rstudio/.Renviron
 #RUN echo "RETICULATE_PYTHON=/home/rstudio/conda/bin/python3" >> /home/rstudio/.Renviron
 
 USER root
+RUN chown --recursive rstudio:staff /home/rstudio/

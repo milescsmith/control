@@ -8,7 +8,7 @@ install.packages(
      lib = "~/R/x86_64-pc-linux-gnu-library"
      )
 BiocManager::install(
-    version = "3.16",
+    version = "3.17",
     update = TRUE,
     ask = FALSE
     )

@@ -31,7 +31,7 @@ install.packages(
         "oaColors",
         "paletteer",
         "parallelDist",
-        "jbengler/tidyheatmap",
+        "tidyHeatmap",
         "plotly",
         "ragg",
         "Rcpp",
@@ -41,6 +41,7 @@ install.packages(
         "Rfast",
         "Rfast2",
         "rsvd",
+        "R.utils",
         "tidyverse",
         "tinytex",
         "usethis"

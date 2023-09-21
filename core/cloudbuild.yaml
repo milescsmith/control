@@ -18,10 +18,10 @@ images:
 - 'us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}'
 substitutions:
     _WORKERBEE_VARIANT: core
-    _WORKERBEE_VERSION: 4.2.2
+    _WORKERBEE_VERSION: 4.3.0
     _PARENT: bioconductor
     _PARENT_VARIANT: None
-    _PARENT_VERSION: "3.16"
+    _PARENT_VERSION: "3.17"
     _REPO: us-central1-docker.pkg.dev
     _SHIPYARD: utopia-planitia
 options:

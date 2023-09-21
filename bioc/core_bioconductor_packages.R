@@ -10,13 +10,13 @@ BiocManager::install(
         "BiocNeighbors",
         "DESeq2",
         "details",
-        "drake",
         "e1071",
         "edgeR",
         "heddlr",
         "leiden",
         "limma",
         "pbdZMQ",
+        "quarto",
         "rsvd",
         "rtracklayer",
         "Rtsne",
@@ -45,4 +45,4 @@ BiocManager::install(
 
 BiocManager::install("milescsmith/moduleScoreR")
 BiocManager::install("milescsmith/parallelCluster")
-BiocManager::install("crotoc/ggforce")
+BiocManager::install("milescsmith/ggforce")

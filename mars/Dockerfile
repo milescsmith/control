@@ -1,33 +1,37 @@
-FROM mambaorg/micromamba:1.4.2 as micromamba
+FROM mambaorg/micromamba:1.4.9 as micromamba
 
 # probably can eliminate this and just use the micromamba image
-FROM python:3.9.16-bullseye
+FROM python:3.10.12-bookworm
 
 ARG USERNAME=nemo
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-ARG PYTHONVERSION=3.9.16
+ARG PYTHONVERSION=3.10.12
 
 # USER root
 RUN useradd --create-home --shell /bin/bash ${USERNAME}
 
 RUN \
-   echo "deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/" >> /etc/apt/sources.list \
+   echo "deb http://cloud.r-project.org/bin/linux/debian bookworm-cran40/" >> /etc/apt/sources.list \
    && gpg --keyserver keyserver.ubuntu.com --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7' \
    && gpg --armor --export '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7' | tee /etc/apt/trusted.gpg.d/cran_debian_key.asc \
-   &&curl -fsSL https://deb.nodesource.com/setup_19.x | bash - \
+   && curl -fsSL https://deb.nodesource.com/setup_19.x | bash - \
    && apt update --fix-missing \
    && apt install -y \
-      libopenblas-base \
+      bat \
+      fd-find \
+      libopenblas-dev \
       libcairo2-dev \
       libhdf5-dev \
       liblapack-dev \
       cmake \
       sudo \
       nodejs \
-      r-base=4.2.3-1~bullseyecran.0 \
-      r-base-dev=4.2.3-1~bullseyecran.0 \
+      r-base=4.3.1-1~bookwormcran.0 \
+      r-base-dev=4.3.1-1~bookwormcran.0 \
       rclone \
+      ripgrep \
+      vim \
    && cp /usr/share/zoneinfo/America/Chicago /etc/localtime \
    && echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
    && apt-get clean \
@@ -88,6 +92,7 @@ COPY --chown=$USERNAME:$USERNAME zeuscert.pem /home/${USERNAME}/.jupyter/zeuscer
 COPY --chown=$USERNAME:$USERNAME zeuskey.key /home/${USERNAME}/.jupyter/zeuskey.key
 
 WORKDIR /home/$USERNAME
+ENV R_LIBS_USER="/home/$USERNAME/R/x86_64-pc-linux-gnu-library"
 RUN mkdir /home/$USERNAME/workspace
 
 EXPOSE 8888

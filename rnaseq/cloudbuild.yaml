@@ -19,10 +19,10 @@ images:
 - 'us-central1-docker.pkg.dev/$PROJECT_ID/${_SHIPYARD}/workerbee-${_WORKERBEE_VARIANT}'
 substitutions:
     _WORKERBEE_VARIANT: rnaseq
-    _WORKERBEE_VERSION: 4.2.2_mk2
+    _WORKERBEE_VERSION: 4.3.0
     _PARENT: workerbee
     _PARENT_VARIANT: ml
-    _PARENT_VERSION: 4.2.2
+    _PARENT_VERSION: 4.3.0
     _REPO: us-central1-docker.pkg.dev
     _SHIPYARD: utopia-planitia
     _RSTUDIO_VERSION: preview
