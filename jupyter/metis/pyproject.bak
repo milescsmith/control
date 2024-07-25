@@ -1,0 +1,77 @@
+[tool.pdm.build]
+includes = []
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[project]
+authors = [
+    {name = "Miles Smith", email = "mileschristiansmith@gmail.com"},
+]
+license = {text = "GPL-3.0"}
+requires-python = "<3.13,<4.0,>=3.10"
+dependencies = [
+    "anndata<1.0.0,>=0.10.6",
+    "black<25.0.0,>=24.3.0",
+    "cython<4.0.0,>=3.0.9",
+    "h5py<4.0.0,>=3.10.0",
+    "ipython<9.0.0,>=8.22.2",
+    "ipywidgets<9.0.0,>=8.1.2",
+    "jax<1.0.0,>=0.4.25",
+    "jupyter-black<1.0.0,>=0.3.4",
+    "jupyter-collaboration<3.0.0,>=2.0.5",
+    "jupyterlab<5.0.0,>=4.1.5",
+    "jupyterlab-execute-time<4.0.0,>=3.1.2",
+    "jupyterlab-pygments<1.0.0,>=0.3.0",
+    "jupyterlab-widgets<4.0.0,>=3.0.10",
+    "jupytext<2.0.0,>=1.16.1",
+    "leidenalg<1.0.0,>=0.10.2",
+    "levenshtein<1.0.0,>=0.25.0",
+    "loguru<1.0.0,>=0.7.2",
+    "loompy<4.0.0,>=3.0.7",
+    "matplotlib<4.0.0,>=3.8.3",
+    "more-itertools<11.0.0,>=10.2.0",
+    "mudata<1.0.0,>=0.2.3",
+    "numba<1.0.0,>=0.59.1",
+    "numexpr<3.0.0,>=2.9.0",
+    "numpy<2.0.0,>=1.26.4",
+    "pip<25.0,>=24.0",
+    "poetry<2.0.0,>=1.8.2",
+    "polars<1.0.0,>=0.20.16",
+    "python-igraph<1.0.0,>=0.11.4",
+    "python-levenshtein<1.0.0,>=0.25.0",
+    "torch<3.0.0,>=2.2.2",
+    "pytorch-lightning<3.0.0,>=2.2.1",
+    "rich<14.0.0,>=13.7.1",
+    "rpy2<4.0.0,>=3.5.15",
+    "scanpy<2.0.0,>=1.10.0",
+    "scikit-image<1.0.0,>=0.22.0",
+    "scikit-learn<2.0.0.0,>=1.4.1.post1",
+    "scikit-misc<1.0.0,>=0.3.1",
+    "scipy<2.0.0,>=1.12.0",
+    "scirpy<1.0.0,>=0.16.0",
+    "scrublet<1.0.0,>=0.2.3",
+    "scvelo<1.0.0,>=0.3.2",
+    "scvi-tools<2.0.0,>=1.1.2",
+    "snapatac2<3.0.0,>=2.6.0",
+    "statsmodels<1.0.0,>=0.14.1",
+    "tqdm<5.0.0,>=4.66.2",
+    "umap-learn<1.0.0,>=0.5.5",
+    "widgetsnbextension<5.0.0,>=4.0.10",
+    "xlrd<3.0.0,>=2.0.1",
+    "fastparquet<2025.0.0,>=2024.2.0",
+    "kaleido==0.2.1",
+    "harmonypy==0.0.9",
+    "revseq>=1.0.0",
+    "muon==0.1.6",
+    "fingerling @ git+https://github.com/milescsmith/fingerling@0.1.1",
+    "tensorflow<3.0.0,>=2.16.1",
+    "tensorflow-probability<1.0.0,>=0.24.0",
+    "vaeda @ git+https://github.com/kostkalab/vaeda",
+    "setuptools<70.0.0,>=69.2.0",
+]
+name = "dummy"
+version = "0.1.0"
+description = ""
+readme = "README.md"

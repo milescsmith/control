@@ -1,0 +1,7 @@
+# Dockerfile list
+
+- juptyer: jupyterlab-based notebooks; uses jupyterlab 4.0+, ydoc, and jupytercollab to enable multi-user jupyterlab instance
+  - deimos: Debian (Bookworm)-based, Python 3.10.13 via micromamba, for GPU use
+  - phobos: Debian (Bookworm)-based, Python 3.10.13 via mamba, CPU-bound
+  - metis: Ubuntu (22.04)-based, Python 3.10.14, pip all the way
+- workerbee: Rstudio
