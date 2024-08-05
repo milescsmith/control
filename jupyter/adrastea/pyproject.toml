@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Add a short description here"
 authors = [{name = "Miles Smith", email = "miles-smith@omrf.org"}]
 requires-python = ">= 3.11"
-dependencies = [ "revseq>=1.0.0,<2", "scirpy>=0.17.2,<0.18", "scrublet>=0.2.3,<0.3", "scvelo", "macs3==3.0.1", "snapatac2==2.6.4", "jupyterlab-execute-time>=3.1.2,<4", "jupyterlab-widgets", "fingerling @ git+https://github.com/milescsmith/fingerling"]
+dependencies = [ "revseq>=1.0.0,<2", "scirpy>=0.17.2,<0.18", "scrublet>=0.2.3,<0.3", "scvelo", "macs3==3.0.1", "snapatac2==2.6.4", "jupyterlab-execute-time>=3.1.2,<4", "jupyterlab-widgets", "fingerling==1.0.0" ]
 
 [build-system]
 requires = ["setuptools"]

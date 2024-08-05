@@ -2,10 +2,10 @@ remotes::install_github(
     c(
         "immunogenomics/presto",
         "milescsmith/enhancedDimPlot",
-        "milescsmith/ReductionWrappers",
-        "milescsmith/s2a",
+        # "milescsmith/ReductionWrappers",
+        # "milescsmith/s2a",
         "milescsmith/SeuratBubblePlot",
-        "milescsmith/SeuratPlotly",
+        # "milescsmith/SeuratPlotly",
         "milescsmith/ViolinEnsemble"
     ),
     upgrade = "always",

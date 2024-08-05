@@ -1,9 +1,13 @@
+setRepositories(ind=1:3)
 BiocManager::install(
     c(
-        "satijalab/Seurat",
-        "satijalab/seurat-data",
-        "satijalab/seurat-wrappers",
-        "mojaveazure/seurat-disk"
+        "Seurat",
+        "seurat-data",
+        "seurat-wrappers",
+        "seurat-disk",
+        "Signac",
+        "BSgenome.Hsapiens.UCSC.hg38",
+        "EnsDb.Hsapiens.v86"
     ),
     upgrade = "always",
     build_manual = FALSE,

@@ -4,7 +4,8 @@ ARG _SHIPYARD
 ARG _PARENT_VERSION
 ARG _PARENT_VARIANT
 ARG _PARENT
-FROM ${_REPO}/${PROJECT}/${_SHIPYARD}/${_PARENT}-${_PARENT_VARIANT}:${_PARENT_VERSION}
+# FROM ${_REPO}/${PROJECT}/${_SHIPYARD}/${_PARENT}-${_PARENT_VARIANT}:${_PARENT_VERSION}
+FROM us-south1-docker.pkg.dev/guthridge-nih-strides-projects/tranquility-base/workerbee-core:4.4.1
 USER rstudio
 WORKDIR /home/rstudio
 

@@ -4,8 +4,8 @@ ARG _SHIPYARD
 ARG _PARENT_VERSION
 ARG _PARENT_VARIANT
 ARG _PARENT
-FROM ${_REPO}/${PROJECT}/${_SHIPYARD}/${_PARENT}-${_PARENT_VARIANT}:${_PARENT_VERSION}
-
+# FROM ${_REPO}/${PROJECT}/${_SHIPYARD}/${_PARENT}-${_PARENT_VARIANT}:${_PARENT_VERSION}
+FROM us-south1-docker.pkg.dev/guthridge-nih-strides-projects/tranquility-base/workerbee-ml:4.4.1
 USER root
 RUN aptitude update && \
    aptitude install --without-recommends -y -f --no-gui \
@@ -44,7 +44,7 @@ RUN Rscript /home/rstudio/scrna_packages.R && \
       rm -rf /tmp/downloaded_packages/ /tmp/*.rds && \
       rm /home/rstudio/scrna_packages.R
 
-RUN mamba run -n reticulate pip install git+https://github.com/milescsmith/ReductionWrappers
+# RUN mamba run -n reticulate pip install git+https://github.com/milescsmith/ReductionWrappers
 RUN ln -s /home/rstudio/workspace/ssh /home/rstudio/.ssh
 
 USER root

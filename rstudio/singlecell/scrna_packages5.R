@@ -1,13 +1,20 @@
 BiocManager::install(
     c(
-        "ape",
-        "BaderLab/scClustViz",
-        "celldex",
-        "chris-mcginnis-ucsf/MULTI-seq",
+        # "ape",
+        # "chris-mcginnis-ucsf/MULTI-seq",
         "glmGamPoi",
-        "ShortRead",
         "tarchetypes",
-        "tidyHeatmap"
+        "tidyHeatmap",
+        "factoextra",
+        "flextable",
+        # "fpc",
+        # "HGNChelper",
+        # "pheatmap",
+        # "quarto",
+        "tarchetypes",
+        "tidyHeatmap",
+        "tidyxl",
+        "vip"
     ),
     upgrade = TRUE,
     ask = FALSE,

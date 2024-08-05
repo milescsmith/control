@@ -56,26 +56,4 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# ${USERNAME}/mamba.sh
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/opt/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "${USERNAME}/conda.sh" ]; then
-#         . "${USERNAME}/conda.sh"
-#     else
-#         export PATH="/opt/conda/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-
-# if [ -f "${USERNAME}/mamba.sh" ]; then
-#     . "${USERNAME}/mamba.sh"
-# fi
-# <<< conda initialize <<<
-eval "$(/usr/local/cargo/bin/mise activate zsh)"
-
-source "$HOME/.cargo/env"
+source "/usr/local/cargo/env"

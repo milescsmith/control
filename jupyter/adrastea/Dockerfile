@@ -1,4 +1,4 @@
-FROM index.docker.io/rust:slim-bullseye
+FROM index.docker.io/rust:slim-bookworm
 
 ARG USERNAME=nemo
 ARG USER_UID=1000
@@ -61,12 +61,9 @@ RUN curl -fsSL https://pixi.sh/install.sh | bash \
 USER nemo
 WORKDIR /home/nemo
 
-COPY --chown=nemo:nemo mise.toml /home/nemo/.config/mise.toml
-COPY --chown=nemo:nemo pyproject.toml /home/nemo/env/pyproject.toml
 COPY --chown=nemo:nemo pixi.lock /home/nemo/env/pixi.lock
-RUN cargo install mise exa bat bottom du-dust
-    # && mise use -g python@3.11 \
-    # && mise cache clear
+RUN cargo install exa bat bottom du-dust
+COPY --chown=nemo:nemo pyproject.toml /home/nemo/env/pyproject.toml
 RUN pixi install --verbose --manifest-path /home/nemo/env/pyproject.toml \
     && pixi clean cache --yes
 
