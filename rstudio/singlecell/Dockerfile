@@ -5,6 +5,8 @@ ARG _PARENT_VERSION
 ARG _PARENT_VARIANT
 ARG _PARENT
 # FROM ${_REPO}/${PROJECT}/${_SHIPYARD}/${_PARENT}-${_PARENT_VARIANT}:${_PARENT_VERSION}
+ARG USERNAME=rstudio
+
 FROM us-south1-docker.pkg.dev/guthridge-nih-strides-projects/tranquility-base/workerbee-ml:4.4.1
 USER root
 RUN aptitude update && \
@@ -46,6 +48,8 @@ RUN Rscript /home/rstudio/scrna_packages.R && \
 
 # RUN mamba run -n reticulate pip install git+https://github.com/milescsmith/ReductionWrappers
 RUN ln -s /home/rstudio/workspace/ssh /home/rstudio/.ssh
+
+COPY --chown=${USERNAME}:staff rclone.conf /home/${USERNAME}/.rclone.conf
 
 USER root
 RUN chown --recursive rstudio:staff /home/rstudio/

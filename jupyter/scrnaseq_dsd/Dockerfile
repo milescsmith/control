@@ -3,20 +3,16 @@ FROM index.docker.io/rust:slim-bookworm
 ARG USERNAME=nemo
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-ARG NODE_MAJOR=20
 
 RUN useradd --create-home --shell /bin/bash ${USERNAME}
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update -qq \
     && apt install -y ca-certificates curl gnupg software-properties-common dirmngr build-essential wget \
-    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/nodesource.gpg \
-    && echo "deb [signed-by=/etc/apt/trusted.gpg.d/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt update --fix-missing \
     && apt install -y \
         btop \
         cmake \
-        fd-find \
         gdb \
         git \
         htop \
@@ -41,8 +37,6 @@ RUN apt update -qq \
         lzma-dev \
         lcov \
         lzma \
-        nodejs \
-        rclone \
         sudo \
         tk-dev \
         uuid-dev \
@@ -63,7 +57,6 @@ USER ${USERNAME}
 WORKDIR /home/${USERNAME}
 
 RUN cargo install exa bat bottom du-dust ripgrep fd-find
-# COPY --chown=${USERNAME}:${USERNAME} pixi.lock /home/${USERNAME}/env/pixi.lock
 COPY --chown=${USERNAME}:${USERNAME} pyproject.toml /home/${USERNAME}/env/pyproject.toml
 RUN pixi install --verbose --manifest-path /home/${USERNAME}/env/pyproject.toml \
     && pixi run --manifest-path /home/${USERNAME}/env/pyproject.toml pip install git+https://github.com/milescsmith/scorphan@0.6.1 git+https://github.com/milescsmith/dsd@0.6.1 \
@@ -73,9 +66,6 @@ RUN pixi install --verbose --manifest-path /home/${USERNAME}/env/pyproject.toml 
 RUN sudo chown --recursive ${USERNAME}:staff /home/${USERNAME}/ \
     && sudo chown --recursive :staff /opt
 
-COPY --chown=${USERNAME}:${USERNAME} rclone.conf /home/${USERNAME}/.config/rclone/rclone.conf
-RUN  sed -i "s/USERNAME/${USERNAME}/g" /home/${USERNAME}/.config/rclone/rclone.conf
-# COPY --chown=${USERNAME}:${USERNAME} jupyter_lab_config.py /home/${USERNAME}/.jupyter/jupyter_lab_config.py
 COPY --chown=${USERNAME}:${USERNAME} jupyter_server_config.py /home/${USERNAME}/.jupyter/jupyter_server_config.py
 COPY --chown=${USERNAME}:${USERNAME} jupyter.log /home/${USERNAME}/logs/jupyter/jupyter.log
 COPY --chown=${USERNAME}:${USERNAME} zeuscert.pem /home/${USERNAME}/.jupyter/zeuscert.pem

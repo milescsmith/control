@@ -1,0 +1,43 @@
+uv pip install \
+  --managed-python \
+  --compile-bytecode \
+  --strict \
+  --dry-run \
+  adjustText \
+  anndata \
+  cell2cell \
+  cna \
+  dandelion \
+  "dask[complete]" \
+  "decoupler[full]" \
+  ipywidgets \
+  jax \
+  jupyterlab \
+  jupyterlab-execute-time \
+  jupyter-ruff \
+  "liana[extras] @ git+https://github.com/saezlab/liana-py" \
+  igraph \
+  louvain \
+  macs3 \
+  muon \
+  numba \
+  numpy \
+  omnipath \
+  pandas \
+  pillow \
+  plotly \
+  pydeseq2 \
+  pywaffle \
+  "polars-u64-idx[all]" --extra-index-url=https://pypi.nvidia.com \
+  revseq \
+  seaborn \
+  'scanpy[leiden]' \
+  sccoda \
+  scirpy \
+  git+https://github.com/milescsmith/scorphan \
+  "scvi-tools[cuda,autotune,scanpy]" \
+  git+https://github.com/milescsmith/scvi_de \
+  "snapatac2 @ git+https://github.com/milescsmith/SnapATAC2.git@2.9.0-dev3#egg-snapatac2&subdirectory=snapatac2-python" \
+  stackprinter \
+  tf-keras \
+  tqdm

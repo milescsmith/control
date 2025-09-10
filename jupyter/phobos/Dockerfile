@@ -122,5 +122,5 @@ COPY --chown=$USERNAME:$USERNAME .zshrc /home/${USERNAME}/.zshrc
 COPY --chown=$USERNAME:$USERNAME mamba.sh /home/${USERNAME}/mamba.sh
 
 EXPOSE 8888
-CMD [ "jupyter", "lab", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--port=8888", "--notebook-dir=workspace", "--ServerApp.config_file=$HOME/.jupyter/jupyter_server_config.py", "--YDocExtension.disable_rtc=False"] 
+CMD [ "jupyter", "lab", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--port=8888", "--notebook-dir=workspace", "--ServerApp.config_file=$HOME/.jupyter/jupyter_server_config.py"] 
 #, "--config='/home/${MAMBA_USER}/.jupyter/jupyter_notebook_config.py'" ]

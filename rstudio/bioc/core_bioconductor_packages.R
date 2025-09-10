@@ -42,7 +42,3 @@ BiocManager::install(
     configure.vars = "--silent",
     configure.args =  "--clean"
 )
-
-BiocManager::install("milescsmith/moduleScoreR")
-BiocManager::install("milescsmith/parallelCluster")
-BiocManager::install("milescsmith/ggforce")

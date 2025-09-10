@@ -1,0 +1,9 @@
+.pixi
+*.egg-info
+**/*Renviron
+**/.DS_Store
+**/*.json
+.vscode/
+**/*.key
+**/*.pem
+**/.git
